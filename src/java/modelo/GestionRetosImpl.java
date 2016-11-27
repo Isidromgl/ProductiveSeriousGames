@@ -17,7 +17,7 @@ public class GestionRetosImpl implements GestionRetos{
     @Transactional()   
     @Override
     public boolean altaRetos(Retos r){
-        em.persist(r);
+        //em.persist(r);
         return true;
     }
      
@@ -25,13 +25,14 @@ public class GestionRetosImpl implements GestionRetos{
     @Override
     public List<Retos> obtenerRetos( ) {
         Query q=em.createNamedQuery("Retos.findAll"); //Lista entera de retos con 
-        //q.setParameter("Retos.findByIdretos", Retos); //
-        List<Retos> listado = (List<Retos>) q.getResultList();
+        
+        List<Retos> listado;
+        listado= q.getResultList();
         return listado;
         
     }
     
-     @Transactional()
+  
     @Override
     public void eliminarReto(){
         String sql = "DELETE FROM Retos r WHERE r.idretos = :idretos";//eliminamos por nombre??? Falta en la vista
@@ -39,7 +40,7 @@ public class GestionRetosImpl implements GestionRetos{
         q.executeUpdate();
     }
     
-     @Transactional()
+     
      @Override
     public void modificarReto(Retos r){//falta esta opcion en la vista
         em.persist(r);

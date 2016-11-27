@@ -47,7 +47,7 @@
                                 <li><a href="#">My Profile</a></li>
                             </ul>
                         </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
+                        <li><a href="index.xhtml"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -63,12 +63,12 @@
                     <ul class="nav nav-stacked">
                         <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu"><h:outputText value="#{msj.Admin}"/><i class="glyphicon glyphicon-chevron-down"></i></a>
                             <ul class="nav nav-stacked collapse in" id="userMenu">
-                                <li><a href="consulta_actividad.xhtml"><i class="glyphicon glyphicon-th"></i><h:outputText value="#{msj.TipoAct}"/></a></li>
-                                <li><a href="consulta_reto.xhtml"><i class="glyphicon glyphicon-stats"></i><h:outputText value="#{msj.RetosUser}"/></a></li>
-                                <li><a href="consulta_medallaSUser.xhtml"><i class="glyphicon glyphicon-user"></i><h:outputText value="#{msj.MedallaUsuario}"/></a></li>
-                                <li><a href="consulta_medallasAlmacen.xhtml"><i class="glyphicon glyphicon-tower"></i><h:outputText value="#{msj.MedallaAlmacen}"/></a></li>
-                                <li><a href="consulta_recompensa"><i class="glyphicon glyphicon-usd"></i><h:outputText value="#{msj.Recompensa}"/></a></li>
-                                <li><a href="#"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+                                <li><a href="consulta_actividad.xhtml"><i class="glyphicon glyphicon-th"></i><h:outputText value=" #{msj.TipoAct}"/></a></li>
+                                <li><a href="consulta_reto.xhtml"><i class="glyphicon glyphicon-stats"></i><h:outputText value=" #{msj.RetosUser}"/></a></li>
+                                <li><a href="consulta_medallaSUser.xhtml"><i class="glyphicon glyphicon-user"></i><h:outputText value=" #{msj.MedallaUsuario}"/></a></li>
+                                <li><a href="consulta_medallasAlmacen.xhtml"><i class="glyphicon glyphicon-tower"></i><h:outputText value=" #{msj.MedallaAlmacen}"/></a></li>
+                                <li><a href="consulta_recompensa"><i class="glyphicon glyphicon-usd"></i><h:outputText value=" #{msj.Recompensa}"/></a></li>
+                                <li><a href="index.xhtml"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -89,10 +89,10 @@
                                     <h:form>
                                         <h:panelGrid columns="3" cellpadding="5">
                                             <h:outputLabel for="menu" />
-                                            <p:selectCheckboxMenu id="menu" value="#{GestionRetos.RetosSelec}" label="Retos"
+                                            <p:selectCheckboxMenu id="menu" value="#{gestionRetos.retosSelec}" label="Retos"
                                                                   required="true" filter="true" filterMatchMode="startsWith" panelStyle="width:350px" class="desplegable" style="width: 300%">
-                                                <f:selectItems value="#{GestionRetos.Retos}" var="n"
-                                                                        itemLabel="#{n.nombreReto}" itemValue="#{n.idReto}"/>
+                                                <f:selectItems value="#{gestionRetos.listadoRetos}" var="n"
+                                                               itemLabel="#{n.nombreReto.nombreReto}" />
                                             </p:selectCheckboxMenu>
                                         </h:panelGrid>
                                     </h:form>
@@ -111,12 +111,12 @@
                                     <br></br>
                                     <div class="row">
                                         <h:outputLabel for="number" value="Mínimo" style="font-weight:bold" class="col-md-3"/>                    
-                                        <h:inputText id="number" value="#{gestionRetos.integer}" label="Number" class="col-md-4"></h:inputText>
+                                        <h:inputText id="number" value="#{gestionRetos}" label="Number" class="col-md-4"></h:inputText>
                                     </div>
                                     <br></br>
                                     <div class="row">
                                         <h:outputLabel for="number" value="Máximo" style="font-weight:bold" class="col-md-3"/>  
-                                        <h:inputText required="required" value="#{gestionRetos.xxx}" size="6" maxlength="6" class="col-md-4"></h:inputText>
+                                        <h:inputText required="required" value="#{gestionRetos}" size="6" maxlength="6" class="col-md-4"></h:inputText>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                                     <div class="row">
                                         <h:outputLabel for="number" value="#{msj.Minima}" style="font-weight:bold; text-align: right" class="col-md-3" /> 
                                         <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2" accesskey="true"
-                                                    id="fechaInicio" value="#{gestionRetos.fechaInicio}" required="true" mindate="2016-01-01">
+                                                    id="fechaInicio" value="#{gestionRetos.reto.fechaInicio}" required="true" mindate="01-01-2016">
                                             <p:ajax event="dateSelect" oncomplete="onDateSelect()" id="calendario"></p:ajax>
                                         </p:calendar>
                                     </div>
@@ -142,7 +142,7 @@
                                     <div class="row">
                                         <h:outputLabel for="number" value="#{msj.Maxima}" style="font-weight:bold; text-align: right" class="col-md-3" /> 
                                         <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2" accesskey="true" 
-                                                    id="fechaMax" value="#{gestionRetos.fechaFin}" required="true" mindate="fechaInicio"> 
+                                                    id="fechaMax" value="#{gestionRetos.reto.fechaFinal}" required="true" mindate="fechaInicio"> 
                                             <p:ajax event="dateSelect" oncomplete="onDateSelect()" id="calendario"></p:ajax>
                                         </p:calendar>
                                     </div>
@@ -158,7 +158,7 @@
                                 <!--<p:button target="_self"  value="#{msj.Consultar}" class="btn btn-primary col-md-5" id="boton">
                                 </p:button>-->
                                 <p:commandButton class="btn btn-primary col-md-5" id="boton" value="#{msj.Consultar}"
-                                                 action="#{GestionRetos.consultaRetos}">
+                                                 action="#{gestionRetos.gestion.obtenerRetos()}">
                                 </p:commandButton> 
                             </div>
                         </div>
@@ -175,18 +175,11 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                            <h1>JSF 2 dataTable - MUESTRA DATOS</h1>
+                            <h1>DATOS DE LA CONSULTA</h1>
 
-                            <h:dataTable value="#{beanReto.mostrarRetos}" var="o"
+                            <h:dataTable value="#{gestionRetos}" var="o"
                                          styleClass="order-table" headerClass="order-table-header" 
                                          rowClasses="order-table-odd-row,order-table-even-row">
-
-                                <h:column>
-                                    <!-- column header -->
-                                    <f:facet name="header">Resultados búsqueda</f:facet>
-                                    <!-- row record -->
-                                    #{o.orderNo} <!--CAMBIAR-->
-                                </h:column>
 
                                 <h:column>
                                     <f:facet name="header">Centro</f:facet>
@@ -208,6 +201,21 @@
                                         #{o.acciones}
                                 </h:column>
 
+                            <h:column>
+                                <f:facet name="header">Acciones</f:facet>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <p:commandButton class="btn btn-primary col-md-5" id="boton4" value="Eliminar" 
+                                                             action="#{GestionRetos.modificarReto}">
+                                            </p:commandButton> 
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p:commandButton class="btn btn-primary col-md-5" id="boton3" value="Eliminar" 
+                                                             action="#">
+                                            </p:commandButton> 
+                                        </div>
+                                    </div>
+                            </h:column>
                             </h:dataTable>
 
                         </div>

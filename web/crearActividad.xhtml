@@ -46,7 +46,7 @@
                                     <li><a href="#">My Profile</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
+                            <li><a href="index.xhtml"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -64,12 +64,12 @@
                         <ul class="nav nav-stacked">
                             <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu"><h:outputText value="#{msj.Admin}"/><i class="glyphicon glyphicon-chevron-down"></i></a>
                                 <ul class="nav nav-stacked collapse in" id="userMenu">
-                                    <li><a href="consulta_actividad.xhtml"><i class="glyphicon glyphicon-th"></i> <h:outputText value="#{msj.TipoAct}"/></a></li>
-                                    <li><a href="consulta_reto.xhtml"><i class="glyphicon glyphicon-stats"></i><h:outputText value="#{msj.RetosUser}"/></a></li>
-                                    <li><a href="consulta_medallasUser.xhtml"><i class="glyphicon glyphicon-user"></i><h:outputText value="#{msj.MedallaUsuario}"/></a></li>
-                                    <li><a href="consulta_medallasAlmacen.xhtml"><i class="glyphicon glyphicon-tower"></i><h:outputText value="#{msj.MedallaAlmacen}"/></a></li>
-                                    <li><a href="consulta_recompensa.xhtml"><i class="glyphicon glyphicon-usd"></i><h:outputText value="#{msj.Recompensa}"/></a></li>
-                                    <li><a href="#"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+                                    <li><a href="consulta_actividad.xhtml"><i class="glyphicon glyphicon-th"></i> <h:outputText value=" #{msj.TipoAct}"/></a></li>
+                                    <li><a href="consulta_reto.xhtml"><i class="glyphicon glyphicon-stats"></i><h:outputText value=" #{msj.RetosUser}"/></a></li>
+                                    <li><a href="consulta_medallasUser.xhtml"><i class="glyphicon glyphicon-user"></i><h:outputText value=" #{msj.MedallaUsuario}"/></a></li>
+                                    <li><a href="consulta_medallasAlmacen.xhtml"><i class="glyphicon glyphicon-tower"></i><h:outputText value=" #{msj.MedallaAlmacen}"/></a></li>
+                                    <li><a href="consulta_recompensa.xhtml"><i class="glyphicon glyphicon-usd"></i><h:outputText value=" #{msj.Recompensa}"/></a></li>
+                                    <li><a href="index.xhtml"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -79,7 +79,7 @@
 
                         <!-- column 2 -->
 
-                        <a href="#"><strong><i class="glyphicon glyphicon-dashboard" id="label"></i> Crear Actividad</strong></a>
+                        <a href="#"><strong><i class="glyphicon glyphicon-dashboard" id="label"></i><h:outputText value="#{msj.CrearAct}"/></strong></a>
                         <hr></hr>
                             <div class="row">
                                 <!-- CENTROS -->
@@ -91,10 +91,10 @@
                                         <div class="panel-body">                             
                                             <h:panelGrid columns="3" cellpadding="5">
                                                 <h:outputLabel for="menu" />
-                                                <p:selectCheckboxMenu id="menu" value="#{beanNewAct.CentrosSelec}" label="Centros"
+                                                <p:selectCheckboxMenu id="menu" value="#{tiposact.centro}" label="Centros"
                                                                       required="true" filter="true" filterMatchMode="startsWith" panelStyle="width:500px" class="desplegable" style="width: 15em">
-                                                    <f:selectItems value="#{beanNewAct.Centros}" var="n"
-                                                                            itemLabel="#{n.nombreCentro}" itemValue="#{n.idCentro}"/>
+                                                    <f:selectItems value="#{tiposact.listCentros}" var="n"
+                                                                            itemLabel="#{n.pltDes}"/>
                                                 </p:selectCheckboxMenu>
                                             </h:panelGrid>
                                         </div>
@@ -109,7 +109,7 @@
                                             <h4><h:outputText value="#{msj.Actividad}"/></h4></div>
                                         <div class="panel-body">
                                             <h:inputTextarea label="Nombre actividad" required="true" rows="1" cols="30"
-                                                             value="#{beanNewAct.ActividadesSelec}"/>
+                                                             value="#{tiposact.act}"/>
                                         </div>
                                         <!--/panel-body-->
                                     </div>
@@ -126,15 +126,15 @@
                                             <br></br>
                                             <div class="row">
                                                 <h:outputLabel for="number" value="Mínimo" style="font-weight:bold; text-align: right" class="col-md-2"/>                    
-                                                <h:inputText id="number" value="#{beanNewAct.integer}" label="Number" size="6" maxlength="6" required="true" class="col-md-2"></h:inputText>
+                                                <h:inputText id="number" value="#{tiposact.cant_ini}" label="Number" size="6" maxlength="6" required="true" class="col-md-2"></h:inputText>
                                                 <h:outputText value="#{validationView.integer}" />
                                                 <h:outputLabel for="number" value="Máximo" style="font-weight:bold; text-align: right" class="col-md-2"/>
-                                                <h:inputText id="number" value="#{beanNewAct.integer}" label="Number" size="6" maxlength="6" required="true" class="col-md-2"></h:inputText>
+                                                <h:inputText id="number" value="#{tiposact.cant_fin}" label="Number" size="6" maxlength="6" required="true" class="col-md-2"></h:inputText>
                                             </div>
                                         </div>
                                     </div>
                                 </div> 
-
+                                                    <!-- FECHA -->
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading" id="titulo">
@@ -145,12 +145,12 @@
                                             <br></br>
                                             <div class="row">
                                                 <p:outputLabel for="fechaInicio" value="Inicio" class="col-md-2" style="text-align: right" />
-                                                <p:calendar pattern="dd/MM/yyyy" id="fechaInicio" value="#{calendarView.fechaInicio}" required="requiered" mindate="2016-01-01" class="col-md-2" />
+                                                <p:calendar pattern="dd/MM/yyyy" id="fechaInicio" value="#{tiposact.fechaIni}" required="true" mindate="01-01-2016" class="col-md-2" />
                                             </div>
                                             <br></br>
                                             <div class="row">
                                                 <p:outputLabel for="fechaInicio" value="#{msj.Fin}" class="col-md-2" style="text-align: right" />
-                                                <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2"> 
+                                                <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2" value="#{tiposact.fechaFin}"> 
                                                     <p:ajax event="dateSelect" oncomplete="onDateSelect()"></p:ajax>
                                                 </p:calendar>
                                             </div>
@@ -164,15 +164,17 @@
                         <div class="col-md-offset-4">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p:button target="_blank"  value="#{msj.Guardar}" class="btn btn-primary col-md-5" id="boton" onclick="guardar()">
-                                    </p:button>
+                                    <p:commandButton class="btn btn-primary col-md-5" id="boton2" value="#{msj.Guardar}"
+                                                 action="#{tiposact.guardar}">
+                                     </p:commandButton>
                                 </div>
                             </div>
                             <br></br>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p:button target="_blank"  value="#{msj.Cerrar}" class="btn btn-primary col-md-5" id="boton" onclick="cerrar()">
-                                    </p:button>
+                                    <p:commandButton class="btn btn-primary col-md-5" id="boton8" value="#{msj.Cerrar}"
+                                                 action="#{tiposact.cerrar}">
+                                    </p:commandButton>
                                 </div>
                             </div>
                         </div>

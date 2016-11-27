@@ -47,7 +47,7 @@
                                 <li><a href="#">My Profile</a></li>
                             </ul>
                         </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
+                        <li><a href="index.xhtml"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -59,18 +59,16 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-2">
-                    <!-- Left column -->
-                    <!--<a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Opciones</strong></a>-->
 
                     <ul class="nav nav-stacked">
                         <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu"><h:outputText value="#{msj.Admin}"/><i class="glyphicon glyphicon-chevron-down"></i></a>
                             <ul class="nav nav-stacked collapse in" id="userMenu">
-                                <li><a href="consulta_actividad.xhtml"><i class="glyphicon glyphicon-th"></i> <h:outputText value="#{msj.TipoAct}"/></a></li>
-                                <li><a href="consulta_reto.xhtml"><i class="glyphicon glyphicon-stats"></i><h:outputText value="#{msj.RetosUser}"/></a></li>
-                                <li><a href="consulta_medallasUser.xhtml"><i class="glyphicon glyphicon-user"></i><h:outputText value="#{msj.MedallaUsuario}"/></a></li>
-                                <li><a href="consulta_medallasAlmacen.xhtml"><i class="glyphicon glyphicon-tower"></i><h:outputText value="#{msj.MedallaAlmacen}"/></a></li>
-                                <li><a href="consulta_recompensa.xhtml"><i class="glyphicon glyphicon-usd"></i><h:outputText value="#{msj.Recompensa}"/></a></li>
-                                <li><a href="#"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+                                <li><a href="consulta_actividad.xhtml"><i class="glyphicon glyphicon-th"></i> <h:outputText value=" #{msj.TipoAct}"/></a></li>
+                                <li><a href="consulta_reto.xhtml"><i class="glyphicon glyphicon-stats"></i><h:outputText value=" #{msj.RetosUser}"/></a></li>
+                                <li><a href="consulta_medallasUser.xhtml"><i class="glyphicon glyphicon-user"></i><h:outputText value=" #{msj.MedallaUsuario}"/></a></li>
+                                <li><a href="consulta_medallasAlmacen.xhtml"><i class="glyphicon glyphicon-tower"></i><h:outputText value=" #{msj.MedallaAlmacen}"/></a></li>
+                                <li><a href="consulta_recompensa.xhtml"><i class="glyphicon glyphicon-usd"></i><h:outputText value=" #{msj.Recompensa}"/></a></li>
+                                <li><a href="index.xhtml"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -91,12 +89,11 @@
                                     <h:form>
                                         <h:panelGrid columns="3" cellpadding="5">
                                             <h:outputLabel for="menu" />
-                                            <p:selectCheckboxMenu id="menu" value="#{beanActividades.CentrosSelec}" label="Centros"
+                                            <p:selectCheckboxMenu id="menu" value="#{tiposact.centro}" label="Centros"
                                                                   required="true" filter="true" filterMatchMode="startsWith" panelStyle="width:500px" class="desplegable" style="width: 300%">
-                                                <f:selectItems value="#{beanActividades.Centros}" var="n"
-                                                               itemLabel="#{n.nombreCentro}" itemValue="#{n.idCentro}"/>
+                                                <f:selectItems value="#{tiposact.listCentros}" var="n" itemLabel="#{n.pltDes}"/>
                                             </p:selectCheckboxMenu>
-                                        </h:panelGrid>
+                                        </h:panelGrid>         
                                     </h:form>
                                 </div>
                             </div>
@@ -111,10 +108,10 @@
                                     <h:form>
                                         <h:panelGrid columns="3" cellpadding="5">
                                             <h:outputLabel for="menu"/>
-                                            <p:selectCheckboxMenu id="menu" value="#{beanActividades.ActividadesSelec}" label="Actividades"
+                                            <p:selectCheckboxMenu id="menu" value="#{tiposact.listAct}" label="Actividades"
                                                                   filter="true" filterMatchMode="startsWith" panelStyle="width:500px" class="desplegable" style="width: 250%">
-                                                <f:selectItems value="#{beanActividades.Actividades}" var="n"
-                                                               itemLabel="#{n.nombreAct}" itemValue="#{n.idAct}"/>
+                                                <f:selectItems value="#{tiposact.listAct}" var="n"
+                                                               itemLabel="#{n.descripción.nivel}"/>
                                             </p:selectCheckboxMenu>
                                         </h:panelGrid>
                                     </h:form>
@@ -140,79 +137,99 @@
                             </div>
                         </div>
                     </div>       -->  
+
+                </div>
+            </div>                   
                     
                              <!--        BOTONES     -->  
+            <div class="row">
+                <div class="col-md-12">
+                    
                     <div class="col-md-offset-4">
                         <div class="row">
                             <div class="col-md-12">
-                                <p:commandButton class="btn btn-primary col-md-5" id="boton" value="#{msj.Consultar}"
-                                                 action="#{beanActividades.consultaActividad}">
-                                </p:commandButton> 
+                                 <p:button target="_self"  value="#{msj.Consultar}" class="btn btn-primary col-md-5" id="boton8"
+                                          onclick="display">
+                                </p:button>                                              
                             </div>
                         </div>
                         <br></br>
-                    <!--<div class="row">
-                            <div class="col-md-12">
-                                <p:commandButton class="btn btn-primary col-md-5" id="boton2" value="Crear nueva actividad" 
-                                                 actionListener="crearActividad.xhtml">  
-                                </p:commandButton> 
-                            </div>
-                        </div> -->
                         <div class="row">
                             <div class="col-md-12">
                                 <p:button target="_self" href="crearActividad.xhtml" value="#{msj.CrearNuevaActividad}" class="btn btn-primary col-md-5" 
-                                          id="boton2">
+                                          id="boton9">
                                 </p:button>
                             </div>
                         </div>
-                    </div>    
-                    
+                    </div>         
                 </div>
-            </div>                   
-
+            </div> 
             <div class="row">
                 <div class="col-md-12">
+                    <p:outputPanel id="display" style="width:250px;padding-left:5px;margin-top:10px">
+                        <p:dataList value="#{tiposact.act}" var="act" emptyMessage="Datos no encontrados">
+                                    #{act}
+                        </p:dataList>
+                    </p:outputPanel>
+                </div>
+            </div>
+    
+                    
+<!--                    <h1>DATOS DE LA CONSULTA</h1>
 
-                    <h1>JSF 2 dataTable - MUESTRA DATOS</h1>
-
-                    <h:dataTable value="#{beanActividades.mostrarActividades}" var="o"
+                    <h:dataTable value="" var="o"
                                  styleClass="order-table"
                                  headerClass="order-table-header"
                                  rowClasses="order-table-odd-row,order-table-even-row">
 
                         <h:column>
-                            <!-- column header -->
+                             column header 
                             <f:facet name="header">Resultados búsqueda</f:facet>
-                            <!-- row record -->
-                            #{o.orderNo} <!--CAMBIAR-->
+                             row record 
+                            CAMBIAR
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">Centro</f:facet>
-                                #{o.centro}
+                                
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">Actividad</f:facet>
-                                #{o.actividad}
+                               
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">Niveles consecución</f:facet>
-                                #{o.nivelescon}
+                                
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">Acciones</f:facet>
-                                #{o.acciones}
+                               
                         </h:column>
 
-                        <h:commandButton value="Crear actividad" type="submit" action="#{beanActividades.crearActividad}" />
+                        <h:commandButton value="Crear actividad" type="submit" action="#{tiposAct.crearActividad}" />
+                            
+                        <h:column>
+                            <f:facet name="header">Acciones</f:facet>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <p:commandButton class="btn btn-primary col-md-5" id="boton4" value="Eliminar" 
+                                                         action="#{tiposAct.modificarAct}">
+                                        </p:commandButton> 
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p:commandButton class="btn btn-primary col-md-5" id="boton3" value="Eliminar" 
+                                                         action="#{tiposAct.eliminarAct}">
+                                        </p:commandButton> 
+                                    </div>
+                                </div>
+                        </h:column>
 
-                    </h:dataTable>
+                    </h:dataTable>      -->
+                   
                 </div>
-            </div>
-        </div>
     </h:body>
 </html>
 

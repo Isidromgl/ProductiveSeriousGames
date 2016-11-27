@@ -1,7 +1,5 @@
-
 package modelo;
-
-
+import entidades.MedallasUsuario;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,15 +10,11 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import entidades.MedallasusuRetos;
 import entidades.Retos;
-
-
-
 @Component(value = "gestionMedallasUsu")
 public class MedallasUsuImpl implements MedallasUsu {
-    @PersistenceContext(name = "PSG_conCalculo")
+    @PersistenceContext(name = "P_S_GPU")
     EntityManager em; 
     
     
@@ -70,24 +64,22 @@ public class MedallasUsuImpl implements MedallasUsu {
     }
 */
     
-    @Transactional
+    
     @Override
-    public List<Retos> obtenerMedallasUsu(String nombre_medalla,
+    public List<MedallasusuRetos> obtenerMedallasUsu(String nombre_medalla,
             List<String> nombre_reto, 
             String valorMin,
             String valorMax,
             java.sql.Date fecha_inicio, //Las fechas sobre las que hay que operar son las de la tabla "retos"
             java.sql.Date fecha_final,
             String puntos){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PSG_medallasusu_1");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("P_S_G_PU");
         EntityManager em = emf.createEntityManager();
         
         String jpql="select r from retos r join r.medallasusu_retos m join m.medallas_usuario u where ";
         jpql+="u.fecha_inicio=:fecha_inicio and u.fecha_final=:fecha_final";
         
-        /*if(nombre_reto!=null && !nombre_reto.equals("")){
-            jpql+=" and r.nombre='"+nombre_reto+"'";
-        }*/
+       
         if(nombre_reto!=null && !nombre_reto.equals("")){
             String valores="(";
             for(int i=1;i<=nombre_reto.size();i++){
@@ -115,34 +107,49 @@ public class MedallasUsuImpl implements MedallasUsu {
         Query q=em.createQuery(jpql);
         q.setParameter("fecha_inicio", fecha_inicio, TemporalType.DATE);
         q.setParameter("fecha_final", fecha_final, TemporalType.DATE);
-        List<Retos> retos=(List<Retos>)q.getResultList();
+        List<MedallasusuRetos> retos=(List<MedallasusuRetos>)q.getResultList();
         em.close();
         emf.close();
         return retos;    
     }
     
-    @Transactional
     @Override
-    public boolean agregarMedallasUsu(MedallasusuRetos medret) {   
+    public List<Retos> obtenerListaRetos() {
+        Query query = em.createNamedQuery("Retos.findAll");
+        List<Retos> lista = query.getResultList();
+        return lista;
+    }
+    
+    
+    @Override
+    public boolean agregarMedallasUsu(MedallasusuRetos medret, Retos ret, MedallasUsuario usu) {   
         em.persist(medret);
+        em.persist(ret);
+        em.persist(usu);
         return true;
     }
     
-    @Transactional
+    
     @Override
-    public boolean eliminarMedallasUsu(MedallasusuRetos medret){    
+    public boolean eliminarMedallasUsu(MedallasusuRetos medret, Retos ret, MedallasUsuario usu){    
         EntityTransaction tx=em.getTransaction();
         tx.begin();
         em.merge(medret); 
         em.remove(medret);
+        em.merge(ret); 
+        em.remove(ret);
+        em.merge(usu); 
+        em.remove(usu);
         tx.commit();
         em.close();
         return true;
     }
     
-    @Transactional
+    
     @Override
-    public void modificarMedallasUsu(MedallasusuRetos medret){
+    public void modificarMedallasUsu(MedallasusuRetos medret, Retos ret, MedallasUsuario usu){
         em.persist(medret);
+        em.persist(ret);
+        em.persist(usu);
     }
 }

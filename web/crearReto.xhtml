@@ -45,7 +45,7 @@
                                 <li><a href="#">My Profile</a></li>
                             </ul>
                         </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
+                        <li><a href="index.xhtml"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -57,12 +57,12 @@
                     <ul class="nav nav-stacked">
                         <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu"><h:outputText value="#{msj.Admin}"/><i class="glyphicon glyphicon-chevron-down"></i></a>
                             <ul class="nav nav-stacked collapse in" id="userMenu">
-                                <li><a href="consulta_actividad.xhtml"><i class="glyphicon glyphicon-th"></i><h:outputText value="#{msj.TipoAct}"/></a></li>
-                                <li><a href="consulta_reto.xhtml"><i class="glyphicon glyphicon-stats"></i><h:outputText value="#{msj.RetosUser}"/></a></li>
-                                <li><a href="consulta_medallasUser.xhtml"><i class="glyphicon glyphicon-user"></i><h:outputText value="#{msj.MedallaUsuario}"/></a></li>
-                                <li><a href="consulta_medallasAlmacen.xhtml"><i class="glyphicon glyphicon-tower"></i><h:outputText value="#{msj.MedallaAlmacen}"/></a></li>
-                                <li><a href="consulta_recompensa.xhtml"><i class="glyphicon glyphicon-usd"></i><h:outputText value="#{msj.Recompensa}"/></a></li>
-                                <li><a href="#"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+                                <li><a href="consulta_actividad.xhtml"><i class="glyphicon glyphicon-th"></i><h:outputText value=" #{msj.TipoAct}"/></a></li>
+                                <li><a href="consulta_reto.xhtml"><i class="glyphicon glyphicon-stats"></i><h:outputText value=" #{msj.RetosUser}"/></a></li>
+                                <li><a href="consulta_medallasUser.xhtml"><i class="glyphicon glyphicon-user"></i><h:outputText value=" #{msj.MedallaUsuario}"/></a></li>
+                                <li><a href="consulta_medallasAlmacen.xhtml"><i class="glyphicon glyphicon-tower"></i><h:outputText value=" #{msj.MedallaAlmacen}"/></a></li>
+                                <li><a href="consulta_recompensa.xhtml"><i class="glyphicon glyphicon-usd"></i><h:outputText value=" #{msj.Recompensa}"/></a></li>
+                                <li><a href="index.xhtml"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -93,16 +93,15 @@
                                     <h4><h:outputText value="#{msj.Centros}"/></h4>
                                 </div>
                                 <div class="panel-body"> 
-
                                     <h:panelGrid columns="3" cellpadding="5">
                                         <h:outputLabel for="menu" />
                                         <h:panelGrid columns="3" cellpadding="5">
                                             <h:outputLabel for="menu" />
                                             <h:form>
-                                                <p:selectCheckboxMenu id="menu" value="#{beanNewAct.CentrosSelec}" label="Centros"
+                                                <p:selectCheckboxMenu id="menu" value="#{GestionRetos.centro}" label="Centros"
                                                                       required="true" filter="true" filterMatchMode="startsWith" panelStyle="width:500px" class="desplegable" style="width: 300%">
-                                                    <f:selectItems value="#{beanNewAct.Centros}" var="n"
-                                                                   itemLabel="#{n.nombreCentro}" itemValue="#{n.idCentro}"/>
+                                                    <f:selectItems value="#{GestionRetos.listCentros}" var="n"
+                                                                   itemLabel="#{n.pltDes}"/>
                                                 </p:selectCheckboxMenu>
                                             </h:form>
                                         </h:panelGrid>
@@ -124,10 +123,10 @@
                                     <br></br>
                                     <div class="row">
                                         <h:outputLabel for="number" value="Mínimo" style="font-weight:bold; text-align: right" class="col-md-2"/>                    
-                                        <h:inputText id="number" value="#{beanNewAct.integer}" label="Number" size="6" maxlength="6" required="true" class="col-md-2"></h:inputText>
-                                        <h:outputText value="#{validationView.integer}" />
+                                        <h:inputText id="number" value="#{gestionRetos.valorMin}" label="Number" size="6" maxlength="6" required="true" class="col-md-2"></h:inputText>
+                                  
                                         <h:outputLabel for="number" value="Máximo" style="font-weight:bold; text-align: right" class="col-md-2"/>
-                                        <h:inputText id="number2" value="#{beanNewAct.integer}" label="Number" size="6" maxlength="6" required="true" class="col-md-2"></h:inputText>
+                                        <h:inputText id="number2" value="#{gestionRetos.valorMax}" label="Number" size="6" maxlength="6" required="true" class="col-md-2"></h:inputText>
                                     </div>
                                 </div>
                             </div>
@@ -143,12 +142,12 @@
                                     <br></br>
                                     <div class="row">
                                         <p:outputLabel for="fechaInicio" value="Inicio" class="col-md-2" style="text-align: right" />
-                                        <p:calendar pattern="dd/MM/yyyy" id="fechaInicio" value="#{calendarView.fechaInicio}" required="requiered" mindate="2016-01-01" class="col-md-2" />
+                                        <p:calendar pattern="dd/MM/yyyy" id="fechaInicio" value="#{gestionRetos.fechaMin}" required="true" mindate="01-01-2016" class="col-md-2" />
                                     </div>
                                     <br></br>
                                     <div class="row">
                                         <p:outputLabel for="fechaInicio" value="#{msj.Fin}" class="col-md-2" style="text-align: right" />
-                                        <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2"> 
+                                        <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2" required="true" value="#{gestionRetos.fechaMax}"> 
                                             <p:ajax event="dateSelect" oncomplete="onDateSelect()"></p:ajax>
                                         </p:calendar>
                                     </div>
@@ -160,15 +159,17 @@
                     <div class="col-md-offset-4">
                         <div class="row">
                             <div class="col-md-12">
-                                <p:button target="_self"  value="#{msj.Guardar}" class="btn btn-primary col-md-5" id="boton1" onclick="guardar()">
-                                </p:button>
+                                <p:commandButton class="btn btn-primary col-md-5" id="boton6" value="#{msj.Guardar}"
+                                                 action="#{gestionReto.guardar}">
+                                </p:commandButton>
                             </div>
                         </div>
                         <br></br>
                         <div class="row">
                             <div class="col-md-12">
-                                <p:button target="_self"  value="#{msj.Cerrar}" class="btn btn-primary col-md-5" id="boton" onclick="cerrar()">
-                                </p:button>
+                                <p:commandButton class="btn btn-primary col-md-5" id="boton8" value="#{msj.Cerrar}"
+                                                 action="#{gestionReto.cerrar}">
+                                </p:commandButton> 
                             </div>
                         </div>
                     </div>

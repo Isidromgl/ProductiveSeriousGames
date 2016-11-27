@@ -1,6 +1,6 @@
-
 package modelo;
 
+import entidades.MedallasAlmacen;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,7 +17,7 @@ import entidades.Retos;
 
 @Component(value = "gestionMedallasAlm")
 public class MedallasAlmImpl implements MedallasAlm {
-    @PersistenceContext(name = "PSG_conCalculo")
+    @PersistenceContext(name = "P_S_GPU")
     EntityManager em; 
     
     /*
@@ -31,9 +31,9 @@ public class MedallasAlmImpl implements MedallasAlm {
     }
     */
     
-    @Transactional
+    
     @Override
-    public List<Retos> obtenerMedallasAlm(List<String> nombre_centro,
+    public List<MedallasplantRetos> obtenerMedallasAlm(List<String> nombre_centro,
             String nombre_medalla, //almacén
             List<String> nombre_reto,           
             String valorMin,
@@ -41,22 +41,36 @@ public class MedallasAlmImpl implements MedallasAlm {
             java.sql.Date fechaMin,
             java.sql.Date fechaMax,           
             String puntos){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PSG_medallasusu_1");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("P_S_GPU");
         EntityManager em = emf.createEntityManager();
         
         String jpql="select r from retos r join r.medallasplant_retos m join m.medallas_almacen a where ";
         jpql+="a.fecha_inicio=:fecha_inicio and a.fecha_final=:fecha_final";
         
-        /*if(nombre_centro!=null && !nombre_centro.equals("")){
-            jpql+=" and a.almacen='"+nombre_centro+"'";
-        }*/
         if(nombre_centro!=null && !nombre_centro.equals("")){
-            String valores="("+nombre_reto;
-            for(int i=1;i<nombre_centro.size();i++){
-                valores+=","+nombre_centro.get(i);
+            String valores="(";
+            for(int i=1;i<=nombre_centro.size();i++){
+                if (i==nombre_centro.size()){
+                    valores+=nombre_centro.get(i);
+                }else{
+                    valores+=nombre_centro.get(i)+",";
+                }
             }
             valores+=")";
-            jpql+=" r.nombre_centro in "+valores;
+            jpql+=" m.almacen in "+valores;
+        }
+        
+        if(nombre_reto!=null && !nombre_reto.equals("")){
+            String valores="(";
+            for(int i=1;i<=nombre_reto.size();i++){
+                if (i==nombre_reto.size()){
+                    valores+=nombre_reto.get(i);
+                }else{
+                    valores+=nombre_reto.get(i)+",";
+                }
+            }
+            valores+=")";
+            jpql+=" r.nombre_reto in "+valores;
         }
         
         if(nombre_medalla!=null && !nombre_medalla.equals("")){
@@ -86,23 +100,38 @@ public class MedallasAlmImpl implements MedallasAlm {
         }
         Query q=em.createQuery(jpql);
         q.setParameter("fecha_inicio", fechaMin, TemporalType.DATE);
-        q.setParameter("fecha_final", fechaMin, TemporalType.DATE);
-        List<Retos> retos=(List<Retos>)q.getResultList();
+        q.setParameter("fecha_final", fechaMax, TemporalType.DATE);
+        List<MedallasplantRetos> retos=(List<MedallasplantRetos>)q.getResultList();
         em.close();
         emf.close();
         return retos;    
     }
     
-    @Transactional
     @Override
-    public boolean agregarMedallasAlm(MedallasplantRetos medplant) {   
+    public List<MedallasAlmacen> obtenerListaCentros() {
+        Query query = em.createNamedQuery("MedallasAlmacen.findAll");
+        List<MedallasAlmacen> lista = query.getResultList();
+        return lista;
+    }
+    
+   
+    @Override
+    public List<Retos> obtenerListaRetos() {
+        Query query = em.createNamedQuery("Retos.findAll");
+        List<Retos> lista = query.getResultList();
+        return lista;
+    } 
+    
+    
+    @Override
+    public boolean agregarMedallasAlm(MedallasplantRetos medplant, Retos ret, MedallasAlmacen alm) {   
         em.persist(medplant);
         return true;
     }
     
-    @Transactional
+    
     @Override
-    public boolean eliminarMedallasAlm(MedallasplantRetos medplant){    
+    public boolean eliminarMedallasAlm(MedallasplantRetos medplant, Retos ret, MedallasAlmacen alm){    
         EntityTransaction tx=em.getTransaction();
         tx.begin();
         em.merge(medplant); 
@@ -112,9 +141,9 @@ public class MedallasAlmImpl implements MedallasAlm {
         return true;
     }
     
-    @Transactional
+    
     @Override
-    public void modificarMedallasAlm(MedallasplantRetos medplant){
+    public void modificarMedallasAlm(MedallasplantRetos medplant, Retos ret, MedallasAlmacen alm){
         em.persist(medplant);
     }
 }

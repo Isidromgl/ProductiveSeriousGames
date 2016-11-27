@@ -8,8 +8,11 @@ package modelo;
 import entidades.TipoActividad;
 import entidades.HandPlantas;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Component;
@@ -46,22 +49,25 @@ public class GestionImpl implements GestionActCent, Serializable{
         listaplant=q.getResultList();
         return listaplant;
     }
-  
     
-    
-    /*public List<Actividades> mostrarActSelec(){
-        Query q=em.createNamedQuery();
-        List<Actividades> result=q.getResultList();
-        return result;
-    }  
-
-   
     @Override
-    public String toString() {
-        return "GestionImpl{" + "em=" + em + '}';
+    public List<TipoActividad> filtroActividad(String PLT_Cc, String descripcion, int cant_ini, int cant_fin){
+        
+      
+        String jpql="select t from TipoActividad where";
+        jpql+="t.descripción:descripcion and t.cantidad_inicial=: cant_ini and t.cantidad_final=:cant_fin and and t.PLT_Cc=: PLT_Cc";
+         
+        Query q=em.createQuery(jpql);
+        q.setParameter("descripción", descripcion);
+        q.setParameter("cantidad_inicial",cant_ini);
+        q.setParameter("cantidad_final",cant_fin);
+        q.setParameter("PLT_Cc", PLT_Cc);
+        
+        List<TipoActividad>  Actividad=(List<TipoActividad>) q.getResultList();
+       
+        return Actividad;
     }
-    */
+  
     
 
 }
-    

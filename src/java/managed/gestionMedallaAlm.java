@@ -1,5 +1,6 @@
 package managed;
 
+import entidades.MedallasAlmacen;
 import modelo.MedallasAlm;
 import java.io.Serializable;
 import java.sql.Date;
@@ -24,26 +25,18 @@ public class gestionMedallaAlm implements Serializable{
    private java.sql.Date fechaMax;
    private String puntos;
 
-    private MedallasplantRetos medallasplantreto;
-    private List<Retos> listadoMedallasAlm = null;
+   private MedallasAlmacen medallasalmacen;
+   private MedallasplantRetos medallasplantreto;
+   private Retos retos;
+   
+   private List<MedallasAlmacen> medallasalmacenlist;
+   private List<MedallasplantRetos> medallasretosplantlist;
+   private List<Retos> retoslist;
     
-    @ManagedProperty("#{gestionmedplant}")
+    @ManagedProperty("#{gestionMedallasAlm}")
     MedallasAlm medallasalm;
    
     public gestionMedallaAlm() {
-    }
-
-    public gestionMedallaAlm(List<String> nombre_centro, String nombre_medalla, List<String> nombre_reto, String valorMin, String valorMax, Date fechaMin, Date fechaMax, String puntos, MedallasplantRetos medallasplantreto, MedallasAlm medallasalm) {
-        this.nombre_centro = nombre_centro;
-        this.nombre_medalla = nombre_medalla;
-        this.nombre_reto = nombre_reto;
-        this.valorMin = valorMin;
-        this.valorMax = valorMax;
-        this.fechaMin = fechaMin;
-        this.fechaMax = fechaMax;
-        this.puntos = puntos;
-        this.medallasplantreto = medallasplantreto;
-        this.medallasalm = medallasalm;
     }
 
     public List<String> getNombre_centro() {
@@ -110,6 +103,14 @@ public class gestionMedallaAlm implements Serializable{
         this.puntos = puntos;
     }
 
+    public MedallasAlmacen getMedallasalmacen() {
+        return medallasalmacen;
+    }
+
+    public void setMedallasalmacen(MedallasAlmacen medallasalmacen) {
+        this.medallasalmacen = medallasalmacen;
+    }
+
     public MedallasplantRetos getMedallasplantreto() {
         return medallasplantreto;
     }
@@ -118,12 +119,38 @@ public class gestionMedallaAlm implements Serializable{
         this.medallasplantreto = medallasplantreto;
     }
 
-    public List<Retos> getListadoMedallasAlm() {
-        return listadoMedallasAlm;
+    public Retos getRetos() {
+        return retos;
     }
 
-    public void setListadoMedallasAlm(List<Retos> listadoMedallasAlm) {
-        this.listadoMedallasAlm = listadoMedallasAlm;
+    public void setRetos(Retos retos) {
+        this.retos = retos;
+    }
+
+    public List<MedallasAlmacen> getMedallasalmacenlist() {
+        medallasalmacenlist = medallasalm.obtenerListaCentros();
+        return medallasalmacenlist;
+    }
+
+    public void setMedallasalmacenlist(List<MedallasAlmacen> medallasalmacenlist) {
+        this.medallasalmacenlist = medallasalmacenlist;
+    }
+
+    public List<MedallasplantRetos> getMedallasretosplantlist() {
+        return medallasretosplantlist;
+    }
+
+    public void setMedallasretosplantlist(List<MedallasplantRetos> medallasretosplantlist) {
+        this.medallasretosplantlist = medallasretosplantlist;
+    }
+
+    public List<Retos> getRetoslist() {
+        retoslist = medallasalm.obtenerListaRetos();
+        return retoslist;
+    }
+
+    public void setRetoslist(List<Retos> retoslist) {
+        this.retoslist = retoslist;
     }
 
     public MedallasAlm getMedallasalm() {
@@ -135,26 +162,24 @@ public class gestionMedallaAlm implements Serializable{
     }
 
     
-    
-    
     //Métodos que vienen del interfaz
     
-    public String obtenerMedallasAlm(){
-        medallasalm.obtenerMedallasAlm(nombre_centro, nombre_medalla, nombre_reto, valorMin, valorMax, fechaMin, fechaMax, puntos);
-        return "";
+    public List<MedallasplantRetos> obtenerMedallasAlm(){
+       List<MedallasplantRetos> medallasplantlist2 = medallasalm.obtenerMedallasAlm(nombre_centro, nombre_medalla, nombre_reto, valorMin, valorMax, fechaMin, fechaMax, puntos);
+        return medallasplantlist2;
     }
     public String agregarMedallasAlm(){
-        medallasalm.agregarMedallasAlm(medallasplantreto);
-        return "";
+        medallasalm.agregarMedallasAlm(medallasplantreto, retos, medallasalmacen);
+        return "crearMedallaAlm";
     }
     
     public String modificarMedallasAlm(){
-        medallasalm.modificarMedallasAlm(medallasplantreto);
+        medallasalm.modificarMedallasAlm(medallasplantreto, retos, medallasalmacen);
         return "";
     }
 
     public String eliminarMedallasAlm(){
-        medallasalm.eliminarMedallasAlm(medallasplantreto);
+        medallasalm.eliminarMedallasAlm(medallasplantreto, retos, medallasalmacen);
         return "";
     }
 }

@@ -14,9 +14,10 @@ import java.util.List;
 @SessionScoped
 public class gestionRetos {
    private Retos reto;
-   private List<Retos> listadoRetos;
+   List<Retos> listadoRetos;
+   List<Retos> RetosSelec;
     
-    @ManagedProperty("#{gestion}")
+    @ManagedProperty("#{gestionRetos}")
     GestionRetos gestion;
     
     public gestionRetos(GestionRetos gestion) {
@@ -24,7 +25,7 @@ public class gestionRetos {
     }
 
     public gestionRetos() {
-        //this.getListadoRetos();
+        
     }
 
     public Retos getReto() {
@@ -36,8 +37,8 @@ public class gestionRetos {
     }
     
     public List<Retos> getListadoRetos() {
-        listadoRetos = gestion.obtenerRetos( );
-        return listadoRetos;//
+        listadoRetos = gestion.obtenerRetos();
+        return listadoRetos;
     }
 
     public void setRetos(List retos) {
@@ -49,23 +50,27 @@ public class gestionRetos {
     }
 
    
-    public void setGestion(GestionRetos gestion) {
+  public void setGestion(GestionRetos gestion) {
         this.gestion = gestion;
     }
   
     public String alta(){
         gestion.altaRetos(reto);
-        return "";//ponemos el nombre de la vista en que se cargaría
+        return "crearReto";//ponemos el nombre de la vista en que se cargaría
     }
 //    public gestionRetos() {
 //    }
     public String modificarReto(){
         gestion.modificarReto(reto); //falta en la vista
-       return ""; 
+       return "consulta_reto"; 
     }
     public String eliminarReto(){//falta en la vista
         gestion.eliminarReto();
-        return "";
+        return "consulta_reto";
+    }
+    public List<Retos> getRetosSelec(){   //esto no haría falta
+        RetosSelec = gestion.obtenerRetos( );
+        return RetosSelec;//
     }
 }
 

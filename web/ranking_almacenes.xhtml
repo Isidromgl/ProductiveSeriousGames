@@ -29,7 +29,7 @@
         <nav class="encabezado">
             <div>
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation"><a href="#"  role="tab" data-toggle="tab"><h:graphicImage class="id" value="resources/img/icons/user.png"/></a></li>
+                    <li role="presentation"><a href="index.xhtml"  role="tab" data-toggle="tab"><h:graphicImage class="id" value="resources/img/icons/user.png"/></a></li>
                     <li role="presentation"><h:outputLink role="tab" value="ranking_usuarios.xhtml"><h:outputText value="#{msj.rkgUsuarios}"></h:outputText></h:outputLink></li>
                     <li role="presentation" class="active"><h:outputLink role="tab" value="#"><h:outputText value="#{msj.rkgAlmacenes}"></h:outputText></h:outputLink></li>
                     <li role="presentation"><h:outputLink role="tab" value="mi_actividad.xhtml"><h:outputText value="#{msj.miActividad}"></h:outputText></h:outputLink></li>  
@@ -102,13 +102,11 @@
         <div class="container-fluid">
             <div class="row barra-bottom espacio"></div>
             <div class="row barra-bottom center-aligned">
-                <h:outputText class="col-md-1 titulo-centro" value="#{msj.centro}"></h:outputText>
-                <h:selectOneMenu class="col-md-2 select-menu" value="#">
-                    <f:selectItem itemValue="1" itemLabel="Item 1" />
-                    <f:selectItem itemValue="2" itemLabel="Item 2" />
-                    <f:selectItem itemValue="3" itemLabel="Item 3" />
-                    <f:selectItem itemValue="4" itemLabel="Item 4" />
-                </h:selectOneMenu>
+                <p class="col-md-1"></p>
+                <p:selectCheckboxMenu id="menu" value="#{tiposact.centro}" label="Centros"
+                                      required="true" filter="true" filterMatchMode="startsWith" panelStyle="width:500px" class="desplegable">
+                    <f:selectItems value="#{tiposact.listCentros}" var="n" itemLabel="#{n.pltDes}"/>
+                </p:selectCheckboxMenu>
 
                 <h:outputText class="col-md-1 titulo-centro" value="#{msj.desde}"></h:outputText>
                 <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2"> 

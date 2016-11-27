@@ -81,18 +81,17 @@ public class beanLogin implements Serializable{
         this.rol = rol;
     }
 
-    public String validarLogin(){
-        this.user=gestion.validarUsuario(usuario,password);
-        if (user == null){
-            return "index";
-        }else{
-            rol = user.getRol();
-            if(rol.equals("GAMIFICATION_ADMIN") ){
-               return "administrado";
-           }else{
-               return "usuario"; 
-            }
-        }
-        //return "index";
-    }    
+   public String validarLogin(){ 
+       this.user = gestion.validarUsuario(usuario, password);
+           rol = user.getRol();
+     
+           switch (rol) {
+               case "GAMIFICATION_ADMIN":
+                   return "consulta_actividad";
+               case "USER":
+                   return "ranking_usuarios";
+               default:
+                   return "index";
+           }
+       }
 }
