@@ -144,14 +144,18 @@
                                             <br></br>
                                             <br></br>
                                             <div class="row">
-                                                <p:outputLabel for="fechaInicio" value="Inicio" class="col-md-2" style="text-align: right" />
-                                                <p:calendar pattern="dd/MM/yyyy" id="fechaInicio" value="#{tiposact.fechaIni}" required="true" mindate="01-01-2016" class="col-md-2" />
+                                                <h:outputLabel for="number" value="#{msj.Minima}" style="font-weight:bold; text-align: right" class="col-md-3" /> 
+                                                <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2" accesskey="true"
+                                                            id="fechaInicio" value="#{gestionMedallas.fechaMin}" required="true" mindate="01-01-2016">
+                                                    <p:ajax event="dateSelect" oncomplete="onDateSelect()" id="calendario"></p:ajax>
+                                                </p:calendar>
                                             </div>
                                             <br></br>
                                             <div class="row">
-                                                <p:outputLabel for="fechaInicio" value="#{msj.Fin}" class="col-md-2" style="text-align: right" />
-                                                <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2" value="#{tiposact.fechaFin}"> 
-                                                    <p:ajax event="dateSelect" oncomplete="onDateSelect()"></p:ajax>
+                                                <h:outputLabel for="number" value="#{msj.Maxima}" style="font-weight:bold; text-align: right" class="col-md-3" /> 
+                                                <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2" accesskey="true" 
+                                                            id="fechaMax" value="#{gestionMedallas.fechaMax}" required="true" mindate="fechaInicio"> 
+                                                    <p:ajax event="dateSelect" oncomplete="onDateSelect()" id="calendario"></p:ajax>
                                                 </p:calendar>
                                             </div>
                                         </div>

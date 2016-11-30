@@ -85,56 +85,60 @@
                                 <div class="panel-heading" id="titulo">
                                     <h4><h:outputText value="#{msj.Retos}"/></h4>
                                 </div>
-                                <div class="panel-body">
-                                    <h:form>
+                                <div class="panel-body">                               
                                         <h:panelGrid columns="3" cellpadding="5">
                                             <h:outputLabel for="menu" />
-                                            <p:selectCheckboxMenu id="menu" value="#{gestionRetos.retosSelec}" label="Retos"
-                                                                  required="true" filter="true" filterMatchMode="startsWith" panelStyle="width:350px" class="desplegable" style="width: 300%">
-                                                <f:selectItems value="#{gestionRetos.listadoRetos}" var="n"
-                                                               itemLabel="#{n.nombreReto.nombreReto}" />
+                                            <p:selectCheckboxMenu id="menu" value="#{gestionMedallas.nombre_reto}" label="Retos"
+                                                                  required="true" filter="true" filterMatchMode="startsWith" panelStyle="width:350px" class="desplegable" style="width: 15em">
+                                                <f:selectItems value="#{gestionMedallas.retoslist}" var="n"
+                                                               itemLabel="#{n.nombreReto.nombreReto}" itemValue="#{n.idretos}"/>
                                             </p:selectCheckboxMenu>
                                         </h:panelGrid>
-                                    </h:form>
                                 </div>
                             </div>      
                         </div>
 
-                        <div class="col-md-4">
+                       
+
+                          <div class="col-md-4">
                             <!-- VALORES -->
                             <div class="panel panel-default">
                                 <div class="panel-heading" id="titulo">
                                     <h4><h:outputText value="#{msj.Valores}"/></h4></div>
-                                <div class="panel-body">
+                                <div class="panel-body">                                                   
                                     <h:outputText value="#{msj.ValoresFiltro}"/>
                                     <br></br>
                                     <br></br>
                                     <div class="row">
                                         <h:outputLabel for="number" value="Mínimo" style="font-weight:bold" class="col-md-3"/>                    
-                                        <h:inputText id="number" value="#{gestionRetos}" label="Number" class="col-md-4"></h:inputText>
+                                        <h:inputText id="number" value="#{gestionMedallas.valorMin}" label="Number" class="col-md-4">
+                                            <f:validateLength minimum="0" maximum="6"></f:validateLength>
+                                        </h:inputText>
                                     </div>
                                     <br></br>
                                     <div class="row">
                                         <h:outputLabel for="number" value="Máximo" style="font-weight:bold" class="col-md-3"/>  
-                                        <h:inputText required="required" value="#{gestionRetos}" size="6" maxlength="6" class="col-md-4"></h:inputText>
+                                        <h:inputText required="required" value="#{gestionMedallas.valorMax}" size="6" maxlength="6" class="col-md-4"></h:inputText> 
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> 
+                    
+                    
+                     
+                        <!-- FECHA -->
                         <div class="col-md-4">
-                            <!-- FECHA -->
                             <div class="panel panel-default">
                                 <div class="panel-heading" id="titulo">
                                     <h4><h:outputText value="#{msj.Fecha}"/></h4></div>
-                                <div class="panel-body">      
+                                <div class="panel-body">                                                   
                                     <h:outputText value="#{msj.FechasFiltro}"/>
                                     <br></br>
                                     <br></br>
                                     <div class="row">
                                         <h:outputLabel for="number" value="#{msj.Minima}" style="font-weight:bold; text-align: right" class="col-md-3" /> 
                                         <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2" accesskey="true"
-                                                    id="fechaInicio" value="#{gestionRetos.reto.fechaInicio}" required="true" mindate="01-01-2016">
+                                                    id="fechaInicio" value="#{gestionMedallas.fechaMin}" required="true" mindate="01-01-2016">
                                             <p:ajax event="dateSelect" oncomplete="onDateSelect()" id="calendario"></p:ajax>
                                         </p:calendar>
                                     </div>
@@ -142,14 +146,15 @@
                                     <div class="row">
                                         <h:outputLabel for="number" value="#{msj.Maxima}" style="font-weight:bold; text-align: right" class="col-md-3" /> 
                                         <p:calendar pattern="dd/MM/yyyy" widgetVar="cal" class="col-md-2" accesskey="true" 
-                                                    id="fechaMax" value="#{gestionRetos.reto.fechaFinal}" required="true" mindate="fechaInicio"> 
+                                                    id="fechaMax" value="#{gestionMedallas.fechaMax}" required="true" mindate="01-01-2017"> 
                                             <p:ajax event="dateSelect" oncomplete="onDateSelect()" id="calendario"></p:ajax>
                                         </p:calendar>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                     </div>
+                     </div>
 
                     <!--        BOTONES     -->
                     <div class="col-md-offset-4">
@@ -222,7 +227,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        
+        
         
     </h:body>
 </html>
